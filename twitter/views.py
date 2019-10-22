@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import json
 @csrf_exempt
-
+#Developer - Jumana
 def home(request):
     return render(request, 'twitter/home.html')
 
@@ -16,7 +16,7 @@ def returnConfigKeys():
     return OAuth1Session('EggZ78mMlqzx1NRl4CiJMa1K0', 'DHONwwc67epaknGLfXQ9zkBX9DxINEuWo6PlLyvJNGqTLnBZYK',
                         '1183878543110881280-Mx3TNNHjfOKEgr6kqPELJuGJetBziq',
                         'mEFItxDycCtOSHpipqpQSRQMsPR1sx1Kmlkc89JYJf63J')
-
+#Developer - Akshaya
 def createTweet(request):
     twitter = returnConfigKeys()
     userTweet = request.GET.get('userTweet')
@@ -27,6 +27,7 @@ def createTweet(request):
     data = r.json()
     return HttpResponse(data['id'])
 
+
 def getUserData():
 	URL = "https://api.twitter.com/1.1/users/show.json"
 	PARAMS = {'user_id': 256071675, 'screen_name': '_akNagarajan_'}
@@ -34,6 +35,7 @@ def getUserData():
 	data = r.json()
 	print(data)
 
+#Developer - Akshaya
 def get(request):
   context = RequestContext(request)
   context_dict = {}
@@ -48,6 +50,7 @@ def getUserTimeline(request):
 	data = r.json()
 	return data.status.id
 
+#Developer - Gowri  
 #to retrieve tweet by the tweet ID
 def retrieveTweet(request):
     twitter = returnConfigKeys()
@@ -61,6 +64,7 @@ def retrieveTweet(request):
 	#return render(request, 'twitter/createTweet.html')
     return HttpResponse(tweet)
 
+#Developer - Gulya
 #to retrieve tweet by the tweet ID
 def deleteTweet(request):
     twitter = returnConfigKeys()
