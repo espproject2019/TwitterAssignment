@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js">
+    </script>
+
+  </head>
+
+</html>
+<body>
+    <div style="background-image: url('https://s3-us-west-2.amazonaws.com/ladder-wp-blog/app/uploads/2018/01/11153158/twitter.gif'); background-position: center; background-repeat: no-repeat; margin: auto;cursor: zoom-in; height:800px; width:1250px;">
+        <h1 style="text-align:center; font-family:verdana;font-size:20pt;">Gryffindors Twitter App</h1><br><br><br><br><br><br><br><br><br><br><br>
+        <input type="hidden" id="csrf_token" value='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+        <div>
+          <h1 style="text-align:center; font-family:verdana;font-size:12pt;">
+            <label for="create">CREATE TWEET HERE</label>
+            </br>
+            <form class="" action="home.html" method="post" name="twitterForm">
+              Enter the text: <input type="text" name="userTweet" id="userTweet" value="" required>
+              <input type="button" class="btn btn-secondary btn-sm" name="Create Tweet" id="CreateTweet" value="Create a tweet">
+              </br>
+              <label for="retrieve">RETRIEVE TWEET ON CLICK OF THIS BUTTON</label>
+
+              </br>
+              <input type="button" name="Retrieve Tweet" class="btn btn-secondary btn-sm" id="RetrieveTweet" value="Retrieve a tweet">
+              <textarea name="tweetTextArea" id="tweetTextArea" rows="8" cols="80" hidden></textarea>
+              </br>
+              <label for="delete">DELETE THE TWEETS HERE</label>
+              <br>
+              <input type="button" name="Delete Tweet" class="btn btn-secondary btn-sm" id="DeleteTweet" value="Delete a tweet">
+            </form>
+            </br><br><br><br><br>
+            <div></div></h1>
+            <div>
+            <a href="https://twitter.com/BarackObama?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-count="false">Follow @BarackObama</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br><br>
+            <a href="https://twitter.com/BillGates?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-count="false">Follow @BillGates</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br><br>
+            <a href="https://twitter.com/Apple?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-count="false">Follow @Apple</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br><br>
+            <a href="https://twitter.com/NASA?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large"  data-show-count="false">Follow @NASA</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br><br>
+            <a href="https://twitter.com/_akNagarajan_?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-count="false">Follow @_akNagarajan_</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+          </div>
+
+
+
+<script type="text/javascript">
+var savedTweetId = "";
+
+//Jquery function to handle click event of create button
+$('#CreateTweet').click(function(e) {
+  $.ajax({
+      url: 'createTweet',
+      method: 'POST',
+      data: {
+          userTweet: $('#userTweet').val()
+      },
+      success: function(data) {
+        var msg = 'Tweet created successfully! Tweet id: ' + data;
+        savedTweetId = data;
+        alert(msg)
+      }
+  });
+});
+
+
+//Jquery function to handle click event of retrieve button
+  $('#RetrieveTweet').click(function(e) {
+    if(savedTweetId == "" || savedTweetId == null )
+    {
+      alert('No tweet to retrieve');
+    }
+    else {
+      $.ajax({
+          url: 'retrieveTweet',
+          method: 'GET',
+          data: {
+              tweetId: savedTweetId //'1185627547729457152' //$('#TestButton1').val()
+          },
+          success: function(data) {
+            var msg = 'Tweet retrieved is:  ' + data ;
+            alert(msg)
+          }
+      });
+    }
+});
+
+//Jquery function to handle click event of delete button
+  $('#DeleteTweet').click(function(e) {
+    if(savedTweetId == "" || savedTweetId == null )
+    {
+      alert('No tweet to retrieve');
+    }
+    else {
+      $.ajax({
+          url: 'deleteTweet',
+          method: 'GET',
+          data: {
+              tweetId: savedTweetId //'1185627547729457152' //$('#TestButton1').val()
+          },
+          success: function(data) {
+            $('input[name=userTweet]').val('');
+            var msg = 'Tweet deleted is:  ' + data ;
+            alert(msg)
+          }
+      });
+    }
+});
+
+</script>
+</body>
+</html>
